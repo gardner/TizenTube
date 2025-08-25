@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets" 
         xmlns:tizen="http://tizen.org/ns/tizen"
         id="com.tizentube.standalone" 
-        version="2025.01.15">
+        version="2025.08.26">
     
     <tizen:application id="tizentube.standalone" required_version="6.0"/>
     <name>TizenTube</name>
