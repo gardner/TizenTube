@@ -214,6 +214,10 @@ For feature requests or bug reports, [open an issue](https://github.com/reisxd/T
 - [Discord Server](https://discord.gg/m2P7v8Y2qR) - Community support and discussion
 - [GitHub Issues](https://github.com/reisxd/TizenTube/issues) - Bug reports and feature requests
 
+# Versioning
+
+TizenTube uses date-based versioning (e.g., `2025.01.15`) for simple, intuitive releases. See [VERSIONING.md](VERSIONING.md) for details.
+
 # License
 
 This project is licensed under GPL-3.0 - see the LICENSE file for details.
