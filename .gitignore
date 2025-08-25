@@ -3,3 +3,6 @@ node_modules/
 *.wgt
 dist/
 .sign
+certificates/
+output/
+web-cli_Tizen_Studio_5.1_ubuntu-64.bin
