@@ -1,0 +1,110 @@
+name: Manual Build TizenTube WGT
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_name:
+        description: 'Build name/identifier'
+        required: false
+        default: 'manual-build'
+        type: string
+      keep_build:
+        description: 'Keep build artifacts for 30 days'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  manual-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Cache Tizen Studio
+      uses: actions/cache@v4
+      with:
+        path: web-cli_Tizen_Studio_5.1_ubuntu-64.bin
+        key: tizen-studio-5.1-${{ hashFiles('docker/build-docker.sh') }}
+
+    - name: Download Tizen Studio (if not cached)
+      run: |
+        if [ ! -f "web-cli_Tizen_Studio_5.1_ubuntu-64.bin" ]; then
+          echo "📥 Downloading Tizen Studio..."
+          sudo apt-get update && sudo apt-get install -y aria2
+          aria2c -j 16 -s 16 -x 16 \
+            -o "web-cli_Tizen_Studio_5.1_ubuntu-64.bin" \
+            --header='Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8' \
+            --header='Accept-Language: en-US,en;q=0.6' \
+            --header='Referer: https://developer.tizen.org/' \
+            -U 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' \
+            https://download.tizen.org/sdk/Installer/tizen-studio_5.1/web-cli_Tizen_Studio_5.1_ubuntu-64.bin
+          chmod +x "web-cli_Tizen_Studio_5.1_ubuntu-64.bin"
+        fi
+
+    - name: Build WGT
+      run: |
+        echo "🔨 Building Docker image..."
+        docker buildx build --platform linux/amd64 --load -t tizentube-builder .
+        
+        echo "🚀 Building WGT..."
+        mkdir -p output certificates
+        chmod 777 output certificates
+        
+        docker run --platform linux/amd64 --rm \
+          -v "$(pwd)/output:/output" \
+          -v "$(pwd)/certificates:/tizen/tizen-studio-data/keystore/author" \
+          tizentube-builder
+
+    - name: Generate build info
+      run: |
+        cat > output/BUILD_INFO.txt << EOF
+        TizenTube Manual Build Information
+        =================================
+        
+        Build Name: ${{ github.event.inputs.build_name }}
+        Build Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        Git Commit: ${{ github.sha }}
+        Git Branch: ${{ github.ref_name }}
+        Workflow: ${{ github.workflow }}
+        Run Number: ${{ github.run_number }}
+        
+        WGT File: TizenTube.wgt
+        WGT Size: $(stat -c%s output/TizenTube.wgt | numfmt --to=iec)
+        
+        Installation:
+        1. Download TizenTube.wgt
+        2. Copy to USB drive  
+        3. Install on Samsung TV
+        4. Launch from TV app menu
+        
+        Support: https://discord.gg/m2P7v8Y2qR
+        EOF
+
+    - name: Upload manual build
+      uses: actions/upload-artifact@v4
+      with:
+        name: tizentube-${{ github.event.inputs.build_name }}-${{ github.run_number }}
+        path: |
+          output/TizenTube.wgt
+          output/BUILD_INFO.txt
+        retention-days: ${{ github.event.inputs.keep_build && 30 || 7 }}
+
+    - name: Build summary
+      run: |
+        echo "## 🎉 TizenTube Build Complete!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Build Name:** ${{ github.event.inputs.build_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**WGT Size:** $(stat -c%s output/TizenTube.wgt | numfmt --to=iec)" >> $GITHUB_STEP_SUMMARY
+        echo "**Build Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📦 Download" >> $GITHUB_STEP_SUMMARY
+        echo "The WGT file is available in the build artifacts above." >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚀 Installation" >> $GITHUB_STEP_SUMMARY
+        echo "1. Download \`TizenTube.wgt\` from artifacts" >> $GITHUB_STEP_SUMMARY
+        echo "2. Copy to USB drive and install on Samsung TV" >> $GITHUB_STEP_SUMMARY
+        echo "3. Launch TizenTube from TV app menu" >> $GITHUB_STEP_SUMMARY
