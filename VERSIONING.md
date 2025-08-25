@@ -51,15 +51,16 @@ This automatically updates:
 
 ### Release Channels
 
-- **Stable Releases**: Tagged versions (e.g., `v2025.01.15`)
+- **Latest Release**: `latest` tag - Always points to the most recent stable version
+- **Stable Releases**: Tagged versions (e.g., `v2025.01.15`) 
 - **Development**: Main branch (continuous integration)
 - **Manual Builds**: On-demand via GitHub Actions
 
 ## Naming Convention
 
 ### Git Tags
-- Format: `v2025.01.15`
-- Example: `v2025.03.22`
+- **Versioned**: `v2025.01.15`, `v2025.03.22`
+- **Latest**: `latest` (always points to most recent release)
 
 ### Release Titles
 - Format: `TizenTube Standalone v2025.01.15`

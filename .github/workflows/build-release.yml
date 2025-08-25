@@ -74,6 +74,10 @@ jobs:
           exit 1
         fi
 
+    - name: Get current date
+      id: date
+      run: echo "date=$(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_OUTPUT
+
     - name: Generate release notes
       id: release_notes
       run: |
@@ -139,3 +143,58 @@ jobs:
         name: tizentube-wgt-${{ github.event.inputs.tag_name || github.ref_name }}
         path: output/TizenTube.wgt
         retention-days: 30
+
+    - name: Update latest tag
+      run: |
+        echo "🏷️ Updating 'latest' tag to point to ${{ github.event.inputs.tag_name || github.ref_name }}"
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Delete existing latest tag (locally and remotely)
+        git tag -d latest || true
+        git push origin :refs/tags/latest || true
+        
+        # Create new latest tag pointing to current release
+        git tag latest
+        git push origin latest
+        
+        echo "✅ 'latest' tag updated successfully"
+
+    - name: Create/Update Latest Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: latest
+        name: TizenTube Standalone (Latest)
+        body: |
+          # 🚀 TizenTube Latest Release
+          
+          This is always the most recent stable release of TizenTube Standalone.
+          
+          **Current Version:** ${{ github.event.inputs.tag_name || github.ref_name }}
+          **Build Date:** ${{ steps.date.outputs.date }}
+          
+          ## 📦 Quick Install
+          
+          1. Download `TizenTube.wgt` below
+          2. Copy to USB drive and install on Samsung TV
+          3. Launch TizenTube from TV app menu
+          
+          ## ✨ What's Included
+          
+          - **Ad-free YouTube TV** - Complete ad removal
+          - **SponsorBlock integration** - Skip sponsored segments  
+          - **Speed controls** - Adjust playback speed
+          - **Custom themes** - Personalize your experience
+          - **DIAL casting support** - Cast from phone/computer
+          
+          ---
+          
+          **Latest Release:** [${{ github.event.inputs.tag_name || github.ref_name }}](https://github.com/reisxd/TizenTube/releases/tag/${{ github.event.inputs.tag_name || github.ref_name }})
+          
+          **Support:** [Discord Community](https://discord.gg/m2P7v8Y2qR) | [GitHub Issues](https://github.com/reisxd/TizenTube/issues)
+        files: |
+          output/TizenTube.wgt
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
