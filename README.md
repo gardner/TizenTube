@@ -19,10 +19,10 @@ Install TizenTube directly on your Samsung TV without requiring TizenBrew:
 
 **Download ready-to-install WGT from GitHub Releases:**
 
-1. **Download WGT**: Go to [Releases](https://github.com/reisxd/TizenTube/releases) and download `TizenTube.wgt`
-   - **Latest Release**: Always get the most recent version from [Latest](https://github.com/reisxd/TizenTube/releases/tag/latest)
+1. **Download WGT**: Go to [Releases](https://github.com/gardner/TizenTube/releases) and download `TizenTube.wgt`
+   - **Latest Release**: Always get the most recent version from [Latest](https://github.com/gardner/TizenTube/releases/tag/latest)
    - **Specific Version**: Choose a specific date-based version (e.g., v2025.01.15)
-2. **Install on TV**: 
+2. **Install on TV**:
    - Copy WGT to USB drive → Install on Samsung TV
    - Or use Tizen CLI: `tizen install -t 0 -n TizenTube.wgt`
 3. **Launch**: Find TizenTube in your TV's app menu
@@ -30,7 +30,7 @@ Install TizenTube directly on your Samsung TV without requiring TizenBrew:
 ### 🛠️ Build from Source
 
 #### Prerequisites (for building)
-- Samsung Tizen TV (2018+ recommended)  
+- Samsung Tizen TV (2018+ recommended)
 - **For Docker Build:** Docker installed on your computer
 - **For Local Build:** Tizen Studio or Tizen CLI installed
 - Developer Mode enabled on TV (for direct installation)
@@ -41,7 +41,7 @@ Install TizenTube directly on your Samsung TV without requiring TizenBrew:
 
 1. **Clone and build using Docker:**
    ```bash
-   git clone https://github.com/reisxd/TizenTube.git
+   git clone https://github.com/gardner/TizenTube.git
    cd TizenTube
    # Build WGT using Docker (includes Tizen Studio)
    ./docker/build-docker.sh
@@ -58,7 +58,7 @@ Install TizenTube directly on your Samsung TV without requiring TizenBrew:
 
 1. **Build the standalone app:**
    ```bash
-   git clone https://github.com/reisxd/TizenTube.git
+   git clone https://github.com/gardner/TizenTube.git
    cd TizenTube/standalone
    pnpm install
    pnpm run build
@@ -88,7 +88,7 @@ Install TizenTube directly on your Samsung TV without requiring TizenBrew:
 
 Use TizenTube as a TizenBrew module:
 
-1. Install TizenBrew from [here](https://github.com/reisxd/TizenBrew) and follow the instructions.
+1. Install TizenBrew from [here](https://github.com/gardner/TizenBrew) and follow the instructions.
 
 2. Add the NPM module `@foxreis/tizentube` to the module manager. You can access the module manager by pressing the [GREEN] button on the remote.
 
@@ -138,7 +138,7 @@ pnpm run build
 # Output: output/TizenTube.wgt
 ```
 
-#### Local Build  
+#### Local Build
 ```bash
 cd standalone
 pnpm install
@@ -185,7 +185,7 @@ We welcome contributions! Please:
 4. Test on actual Tizen TV hardware when possible
 5. Submit a pull request
 
-For feature requests or bug reports, [open an issue](https://github.com/reisxd/TizenTube/issues/new).
+For feature requests or bug reports, [open an issue](https://github.com/gardner/TizenTube/issues/new).
 
 # Troubleshooting
 
@@ -214,7 +214,7 @@ For feature requests or bug reports, [open an issue](https://github.com/reisxd/T
 ## Support
 
 - [Discord Server](https://discord.gg/m2P7v8Y2qR) - Community support and discussion
-- [GitHub Issues](https://github.com/reisxd/TizenTube/issues) - Bug reports and feature requests
+- [GitHub Issues](https://github.com/gardner/TizenTube/issues) - Bug reports and feature requests
 
 # Versioning
 
@@ -227,6 +227,6 @@ This project is licensed under GPL-3.0 - see the LICENSE file for details.
 # Acknowledgments
 
 - [SponsorBlock](https://sponsor.ajay.app/) API for community-driven segment data
-- [DeArrow](https://dearrow.ajay.app/) for title and thumbnail replacements  
-- [TizenBrew](https://github.com/reisxd/TizenBrew) for the original module system
+- [DeArrow](https://dearrow.ajay.app/) for title and thumbnail replacements
+- [TizenBrew](https://github.com/gardner/TizenBrew) for the original module system
 - YouTube WebOS contributors for foundational code

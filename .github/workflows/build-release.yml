@@ -83,45 +83,45 @@ jobs:
       run: |
         cat > release_notes.md << EOF
         # TizenTube Standalone Release
-        
+
         ## 🚀 Installation
-        
+
         ### Quick Install (Recommended)
         1. Download \`TizenTube.wgt\` from this release
         2. Copy to USB drive and install on your Samsung TV
         3. Launch TizenTube from your TV's app menu
-        
+
         ### Developer Install
         \`\`\`bash
         # Connect to your TV and install directly
         tizen install -t 0 -n TizenTube.wgt
         \`\`\`
-        
+
         ## ✨ Features
         - **Ad-free YouTube TV** - Complete ad blocking
         - **SponsorBlock integration** - Skip sponsored segments
         - **Speed controls** - Adjust playback speed
-        - **Custom themes** - Personalize your experience  
+        - **Custom themes** - Personalize your experience
         - **Long press support** - Enhanced navigation
         - **No TizenBrew required** - Direct TV installation
-        
+
         ## 🔧 Technical Details
         - **App ID**: \`com.tizentube.standalone\`
         - **Min Tizen Version**: 6.0+
         - **Compatible**: Samsung Tizen TVs (2018+)
         - **Size**: $(stat -c%s output/TizenTube.wgt | numfmt --to=iec)
         - **Build**: GitHub Actions automated build
-        
+
         ## 🛠️ Build from Source
         \`\`\`bash
-        git clone https://github.com/reisxd/TizenTube.git
+        git clone https://github.com/gardner/TizenTube.git
         cd TizenTube
         ./docker/build-docker.sh
         \`\`\`
-        
+
         ## 💬 Support
         - [Discord Community](https://discord.gg/m2P7v8Y2qR)
-        - [GitHub Issues](https://github.com/reisxd/TizenTube/issues)
+        - [GitHub Issues](https://github.com/gardner/TizenTube/issues)
         EOF
 
     - name: Create Release
@@ -149,15 +149,15 @@ jobs:
         echo "🏷️ Updating 'latest' tag to point to ${{ github.event.inputs.tag_name || github.ref_name }}"
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        
+
         # Delete existing latest tag (locally and remotely)
         git tag -d latest || true
         git push origin :refs/tags/latest || true
-        
+
         # Create new latest tag pointing to current release
         git tag latest
         git push origin latest
-        
+
         echo "✅ 'latest' tag updated successfully"
 
     - name: Create/Update Latest Release
@@ -167,31 +167,31 @@ jobs:
         name: TizenTube Standalone (Latest)
         body: |
           # 🚀 TizenTube Latest Release
-          
+
           This is always the most recent stable release of TizenTube Standalone.
-          
+
           **Current Version:** ${{ github.event.inputs.tag_name || github.ref_name }}
           **Build Date:** ${{ steps.date.outputs.date }}
-          
+
           ## 📦 Quick Install
-          
+
           1. Download `TizenTube.wgt` below
           2. Copy to USB drive and install on Samsung TV
           3. Launch TizenTube from TV app menu
-          
+
           ## ✨ What's Included
-          
+
           - **Ad-free YouTube TV** - Complete ad removal
-          - **SponsorBlock integration** - Skip sponsored segments  
+          - **SponsorBlock integration** - Skip sponsored segments
           - **Speed controls** - Adjust playback speed
           - **Custom themes** - Personalize your experience
           - **DIAL casting support** - Cast from phone/computer
-          
+
           ---
-          
-          **Latest Release:** [${{ github.event.inputs.tag_name || github.ref_name }}](https://github.com/reisxd/TizenTube/releases/tag/${{ github.event.inputs.tag_name || github.ref_name }})
-          
-          **Support:** [Discord Community](https://discord.gg/m2P7v8Y2qR) | [GitHub Issues](https://github.com/reisxd/TizenTube/issues)
+
+          **Latest Release:** [${{ github.event.inputs.tag_name || github.ref_name }}](https://github.com/gardner/TizenTube/releases/tag/${{ github.event.inputs.tag_name || github.ref_name }})
+
+          **Support:** [Discord Community](https://discord.gg/m2P7v8Y2qR) | [GitHub Issues](https://github.com/gardner/TizenTube/issues)
         files: |
           output/TizenTube.wgt
         draft: false
