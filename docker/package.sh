@@ -60,13 +60,19 @@ echo "🔨 Building web package..."
 tizen build-web --optimize -e ".*" -e "README.md" -e "node_modules/*" -e "package*.json" -e "pnpm-lock.yaml"
 
 echo "📦 Packaging WGT..."
+# Move to .buildResult directory to avoid duplicate structure
+if [ -d ".buildResult" ]; then
+    echo "🔄 Using .buildResult directory for clean packaging..."
+    cd .buildResult
+fi
+
 # Try packaging without security profile first (for testing)
 echo "🧪 Trying basic packaging..."
 tizen package -t wgt || {
     echo "❌ Basic packaging failed, trying with profile..."
     tizen package -t wgt -s TizenTube || {
         echo "❌ Profile packaging failed, trying expect script..."
-        /tizen/expect_script || {
+        cd .. && /tizen/expect_script || {
             echo "❌ All packaging methods failed!"
             exit 1
         }
@@ -75,7 +81,14 @@ tizen package -t wgt || {
 
 echo "📁 Moving WGT to output directory..."
 mkdir -p /output
-cp TizenTube.wgt /output/ || { echo "❌ Failed to copy WGT!"; exit 1; }
+# Find and copy the WGT file (may be in current dir or parent)
+if [ -f "TizenTube.wgt" ]; then
+    cp TizenTube.wgt /output/
+elif [ -f "../TizenTube.wgt" ]; then
+    cp ../TizenTube.wgt /output/
+else
+    echo "❌ Failed to find TizenTube.wgt!"; exit 1
+fi
 
 echo "✅ TizenTube WGT packaging complete!"
 echo "📦 Output: /output/TizenTube.wgt"
