@@ -2,9 +2,9 @@
 <widget xmlns="http://www.w3.org/ns/widgets" 
         xmlns:tizen="http://tizen.org/ns/tizen"
         id="com.tizentube.standalone" 
-        version="2025.08.26">
+        version="1.0.0">
     
-    <tizen:application id="tizentube.standalone" required_version="6.0"/>
+    <tizen:application id="tizentube.standalone" required_version="2.4"/>
     <name>TizenTube</name>
     <description>Ad-free YouTube TV with SponsorBlock</description>
     
@@ -20,4 +20,8 @@
     
     <content src="index.html"/>
     <icon src="assets/icons/icon-256.png"/>
+    
+    <!-- Tizen TV profile and settings -->
+    <tizen:profile name="tv-samsung"/>
+    <tizen:setting screen-orientation="landscape" context-menu="enable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
 </widget>
