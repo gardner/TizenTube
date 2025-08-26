@@ -107,7 +107,7 @@ jobs:
 
         ## 🔧 Technical Details
         - **App ID**: \`com.tizentube.standalone\`
-        - **Min Tizen Version**: 6.0+
+        - **Min Tizen Version**: 2.4+
         - **Compatible**: Samsung Tizen TVs (2018+)
         - **Size**: $(stat -c%s output/TizenTube.wgt | numfmt --to=iec)
         - **Build**: GitHub Actions automated build

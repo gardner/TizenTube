@@ -21,7 +21,7 @@ Install TizenTube directly on your Samsung TV without requiring TizenBrew:
 
 1. **Download WGT**: Go to [Releases](https://github.com/gardner/TizenTube/releases) and download `TizenTube.wgt`
    - **Latest Release**: Always get the most recent version from [Latest](https://github.com/gardner/TizenTube/releases/tag/latest)
-   - **Specific Version**: Choose a specific date-based version (e.g., v2025.01.15)
+   - **Specific Version**: Choose a specific semantic version (e.g., v1.2.0)
 2. **Install on TV**:
    - Copy WGT to USB drive → Install on Samsung TV
    - Or use Tizen CLI: `tizen install -t 0 -n TizenTube.wgt`
@@ -218,7 +218,7 @@ For feature requests or bug reports, [open an issue](https://github.com/gardner/
 
 # Versioning
 
-TizenTube uses date-based versioning (e.g., `2025.01.15`) for simple, intuitive releases. See [VERSIONING.md](VERSIONING.md) for details.
+TizenTube uses semantic versioning (e.g., `1.2.0`) to ensure Tizen platform compatibility. See [VERSIONING.md](VERSIONING.md) for details.
 
 # License
 
