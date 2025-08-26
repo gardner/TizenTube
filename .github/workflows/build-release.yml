@@ -33,12 +33,12 @@ jobs:
         pnpm install
         pnpm run build
         echo "✅ Mods build successful"
-        
+
         cd ../standalone
-        pnpm install  
+        pnpm install
         pnpm run build
         echo "✅ Standalone build successful"
-        
+
         # Verify build outputs
         ls -la dist/
         echo "📦 Build output verified"
@@ -93,11 +93,11 @@ jobs:
           echo "✅ WGT created successfully"
           ls -lah output/TizenTube.wgt
           echo "📊 WGT size: $(stat -c%s output/TizenTube.wgt | numfmt --to=iec)"
-          
+
           # Enhanced WGT validation (from test workflow)
           echo "🔍 Verifying WGT contents..."
           unzip -l output/TizenTube.wgt
-          
+
           # Check for required files
           echo "🔍 Testing WGT structure..."
           unzip -t output/TizenTube.wgt
@@ -150,7 +150,7 @@ jobs:
         - **No TizenBrew required** - Direct TV installation
 
         ## 🔧 Technical Details
-        - **App ID**: \`com.tizentube.standalone\`
+        - **App ID**: \`nz.bickford.tizentube\`
         - **Min Tizen Version**: 2.4+
         - **Compatible**: Samsung Tizen TVs (2018+)
         - **Size**: $(stat -c%s output/TizenTube.wgt | numfmt --to=iec)
