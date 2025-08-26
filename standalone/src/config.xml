@@ -2,9 +2,9 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:tizen="http://tizen.org/ns/tizen"
         id="nz.bickford.tizentube"
-        version="1.1.5">
+        version="1.1.6">
 
-    <tizen:application id="nz.bickford.tizentube" required_version="2.4"/>
+    <tizen:application id="nz.bickford.tizentube" required_version="5.0.0"/>
     <name>TizenTube</name>
     <description>Ad-free YouTube TV with SponsorBlock</description>
 
